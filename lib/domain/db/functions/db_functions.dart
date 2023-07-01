@@ -27,18 +27,11 @@ void addallsongsdb(SongModel data) async {
   }
 }
 
-// printdata() async {
-//   final allsongdatabase = await Hive.openBox<songsmodel>(boxname);
-//   for (var elemetns in allsongdatabase.values) {
-//     print(elemetns.songName);
-//   }
-// }
 
-AllsongsdatashowList() async {
+AllsongsdatashowToList() async {
   final allsongdatabase = await Hive.openBox<songsmodel>(boxname);
-  allSongListNotifier.value.clear();
-  allSongListNotifier.value.addAll(allsongdatabase.values);
-  allSongListNotifier.notifyListeners();
+  allSongsListGlobal.clear();
+  allSongsListGlobal.addAll(allsongdatabase.values);
 }
 
 // Future<void> checksongs() async{
@@ -65,7 +58,7 @@ addtofavroutiedbfunction(songsmodel data, BuildContext context) async {
   if (check == false) {
     favrioutedatabase.add(data);
     favsongListNotifier.notifyListeners();
-    allSongListNotifier.notifyListeners();
+   // allSongListNotifier.notifyListeners();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text("Add to Favorites"),
       behavior: SnackBarBehavior.floating,
@@ -89,7 +82,7 @@ favsongslistdelete(songsmodel data, BuildContext context) async {
     if (data.id == elements.id) {
       favrioutedatabase.deleteAt(count);
       favsongListNotifier.notifyListeners();
-      allSongListNotifier.notifyListeners();
+      //allSongListNotifier.notifyListeners();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text("Song removed"),
         behavior: SnackBarBehavior.floating,

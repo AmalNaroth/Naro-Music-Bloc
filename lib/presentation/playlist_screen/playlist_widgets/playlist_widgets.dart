@@ -217,9 +217,9 @@ void callingBottomSheetsonglisting(BuildContext context, String listname) {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: allSongListNotifier.value.length,
+              itemCount: allSongsListGlobal.length,
               itemBuilder: (BuildContext context, int index) {
-                final data = allSongListNotifier.value[index];
+                final data = allSongsListGlobal[index];
                 return Container(
                     decoration: BoxDecoration(
                         color: Colors.grey.shade400,

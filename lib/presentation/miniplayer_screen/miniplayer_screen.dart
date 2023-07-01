@@ -31,7 +31,6 @@ class _MiniPlayerState extends State<MiniPlayer> {
           onTap: () {
             final data = findsongwithid(int.parse(playing.audio.audio.metas.id.toString()));
           Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> NowPlayingScreen(data:data)));
-
             //    Navigator.push(context, MaterialPageRoute(builder: (cntx) {
             //   return nowplayingscreen(data: ,);
             // }));

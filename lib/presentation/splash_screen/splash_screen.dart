@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       CheckPermission();
       addname();
-      AllsongsdatashowList();
+      AllsongsdatashowToList();
     });
     super.initState();
   }

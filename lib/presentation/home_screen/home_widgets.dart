@@ -81,7 +81,7 @@ class _songlistbarState extends State<songlistbar> {
         ],
       ),
       onTap: () {
-        playsongs(widget.index, allSongListNotifier.value);
+        playsongs(widget.index, allSongsListGlobal);
         Navigator.push(
             context,
             MaterialPageRoute(

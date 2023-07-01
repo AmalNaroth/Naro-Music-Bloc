@@ -3,7 +3,7 @@ import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
 
 void findsong(int id){
-  for(var element in allSongListNotifier.value){
+  for(var element in allSongsListGlobal){
     if(element.id==id){
      addrecentlyplayed(element);
      mostPlayedSongs(element);
@@ -15,7 +15,7 @@ void findsong(int id){
 
 songsmodel findsongwithid(int songid){
   late songsmodel data;
-  for(var element in allSongListNotifier.value){
+  for(var element in allSongsListGlobal){
     
     if(songid == element.id){
      
@@ -24,5 +24,5 @@ songsmodel findsongwithid(int songid){
   }
 
   return data;
-  
+
 }

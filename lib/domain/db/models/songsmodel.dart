@@ -28,3 +28,5 @@ class songsmodel{
   }
     
   }
+
+  List<songsmodel> allSongsListGlobal=[];
