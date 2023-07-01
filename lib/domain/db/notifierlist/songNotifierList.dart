@@ -3,7 +3,7 @@ import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 
 
-ValueNotifier<List<songsmodel>>favsongListNotifier= ValueNotifier([]);
+//ValueNotifier<List<songsmodel>>favsongListNotifier= ValueNotifier([]);
 
 ValueNotifier<List<songsmodel>>recentlyPlayedNotifier= ValueNotifier([]);
 

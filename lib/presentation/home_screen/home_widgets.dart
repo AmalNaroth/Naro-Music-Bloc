@@ -1,6 +1,8 @@
 //allsonglisting hompage songlistbar
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:naromusic/application/favourites/favourites_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
@@ -16,6 +18,8 @@ import 'package:on_audio_query/on_audio_query.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_scroll/text_scroll.dart';
 
+
+//homepage single song bar
 class songlistbar extends StatefulWidget {
   songlistbar(
       {super.key,
@@ -69,9 +73,11 @@ class _songlistbarState extends State<songlistbar> {
               onPressed: () {
                 setState(() {
                   if (isChecking == false) {
-                    addtofavroutiedbfunction(widget.data, context);
+                    //addtofavroutiedbfunction(widget.data);
+                    context.read<FavouritesBloc>().add(FavoriteListSongAdding(newfavsongdata: widget.data));
                   } else {
-                    favsongslistdelete(widget.data, context);
+                    //favsongslistdelete(widget.data);
+                    context.read<FavouritesBloc>().add(FavoriteListSongDeleting(favsongdeletesong: widget.data));
                   }
                 });
               },

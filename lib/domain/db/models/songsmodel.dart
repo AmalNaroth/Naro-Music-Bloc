@@ -30,3 +30,5 @@ class songsmodel{
   }
 
   List<songsmodel> allSongsListGlobal=[];
+
+  List<songsmodel> allFavouriteListGlobal=[];

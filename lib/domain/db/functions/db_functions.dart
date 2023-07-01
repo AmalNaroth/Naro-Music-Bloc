@@ -47,7 +47,7 @@ AllsongsdatashowToList() async {
 //   }
 // }
 
-addtofavroutiedbfunction(songsmodel data, BuildContext context) async {
+addtofavroutiedbfunction(songsmodel data,) async {
   final favrioutedatabase = await Hive.openBox<songsmodel>("favlistDB");
   bool check = false;
   for (var elements in favrioutedatabase.values) {
@@ -57,37 +57,39 @@ addtofavroutiedbfunction(songsmodel data, BuildContext context) async {
   }
   if (check == false) {
     favrioutedatabase.add(data);
-    favsongListNotifier.notifyListeners();
+   // favsongListNotifier.notifyListeners();
    // allSongListNotifier.notifyListeners();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("Add to Favorites"),
-      behavior: SnackBarBehavior.floating,
-      duration: Duration(seconds: 1),
-    ));
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //   content: Text("Add to Favorites"),
+    //   behavior: SnackBarBehavior.floating,
+    //   duration: Duration(seconds: 1),
+    // ));
   }
   allsongsfavlistshow();
 }
 
 allsongsfavlistshow() async {
   final favrioutedatabase = await Hive.openBox<songsmodel>("favlistDB");
-  favsongListNotifier.value.clear();
-  favsongListNotifier.value.addAll(favrioutedatabase.values);
-  favsongListNotifier.notifyListeners();
+  // favsongListNotifier.value.clear();
+  // favsongListNotifier.value.addAll(favrioutedatabase.values);
+  // favsongListNotifier.notifyListeners();
+  allFavouriteListGlobal.clear();
+  allFavouriteListGlobal.addAll(favrioutedatabase.values);
 }
 
-favsongslistdelete(songsmodel data, BuildContext context) async {
+favsongslistdelete(songsmodel data) async {
   final favrioutedatabase = await Hive.openBox<songsmodel>("favlistDB");
   int count = 0;
   for (var elements in favrioutedatabase.values) {
     if (data.id == elements.id) {
       favrioutedatabase.deleteAt(count);
-      favsongListNotifier.notifyListeners();
+      //favsongListNotifier.notifyListeners();
       //allSongListNotifier.notifyListeners();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text("Song removed"),
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 1),
-      ));
+      // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      //   content: Text("Song removed"),
+      //   behavior: SnackBarBehavior.floating,
+      //   duration: Duration(seconds: 1),
+      // ));
     }
     count++;
   }
@@ -178,7 +180,7 @@ void allMostPlayedListShow() async {
 }
 
 bool favouritecheckings(songsmodel data) {
-  for (var elements in favsongListNotifier.value) {
+  for (var elements in allFavouriteListGlobal) {
     if (data.id == elements.id) {
       return true;
     }

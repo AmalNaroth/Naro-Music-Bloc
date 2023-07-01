@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naromusic/application/bottomnav/bottomnav_bloc.dart';
+import 'package:naromusic/application/favourites/favourites_bloc.dart';
 import 'package:naromusic/application/songsearch/songsearch_bloc.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -18,6 +19,8 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(playlistmodelAdapter().typeId)) {
     Hive.registerAdapter(playlistmodelAdapter());
   }
+  await Hive.openBox<songsmodel>(boxname);
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(const MyApp());
@@ -35,6 +38,9 @@ class MyApp extends StatelessWidget {
          BlocProvider(
           create: (context) => SongsearchBloc(),
         ),
+        BlocProvider(
+          create: (context) => FavouritesBloc(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

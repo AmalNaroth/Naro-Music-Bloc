@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:naromusic/application/favourites/favourites_bloc.dart';
 import 'package:naromusic/application/songsearch/songsearch_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -131,10 +132,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                       onPressed: () {
                                         setState(() {
                                           if (isChecking == false) {
-                                            addtofavroutiedbfunction(
-                                                data, context);
+                                            // addtofavroutiedbfunction(
+                                            //     data);
+                                            context.read<FavouritesBloc>().add(FavoriteListSongAdding(newfavsongdata: data));
                                           } else {
-                                            favsongslistdelete(data, context);
+                                            context.read<FavouritesBloc>().add(FavoriteListSongDeleting(favsongdeletesong: data));
                                           }
                                         });
                                       },
