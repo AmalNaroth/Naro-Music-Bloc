@@ -1,10 +1,19 @@
 //allsonglisting hompage songlistbar
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
 import 'package:naromusic/infrastructure/controller/controllers.dart';
+import 'package:naromusic/presentation/home_screen/fav-rec-most/favourite-songs_screen.dart';
+import 'package:naromusic/presentation/home_screen/fav-rec-most/mostplayed-songs_screen.dart';
+import 'package:naromusic/presentation/home_screen/fav-rec-most/recentlyplayed-songs_screen.dart';
+import 'package:naromusic/presentation/miniplayer_screen/miniplayer_screen.dart';
+import 'package:naromusic/presentation/nowplaying_screen/nowplaying_screen.dart';
+import 'package:naromusic/presentation/widgets/common_widgets.dart';
+import 'package:naromusic/presentation/widgets/show_dialoges.dart';
 import 'package:on_audio_query/on_audio_query.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:text_scroll/text_scroll.dart';
 
 class songlistbar extends StatefulWidget {
@@ -27,7 +36,7 @@ class songlistbar extends StatefulWidget {
 class _songlistbarState extends State<songlistbar> {
   @override
   Widget build(BuildContext context) {
-    //bool isChecking = favouritecheckings(widget.data);
+    bool isChecking = favouritecheckings(widget.data);
     return ListTile(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -53,41 +62,36 @@ class _songlistbarState extends State<songlistbar> {
         children: [
           IconButton(
               onPressed: () {
-               // callingBottomSheet(context, widget.data);
+                callingBottomSheet(context, widget.data);
               },
               icon: Icon(Icons.list)),
           IconButton(
               onPressed: () {
-                // setState(() {
-                //   if (isChecking == false) {
-                //     addtofavroutiedbfunction(widget.data, context);
-                //   } else {
-                //     favsongslistdelete(widget.data, context);
-                //   }
-                // });
+                setState(() {
+                  if (isChecking == false) {
+                    addtofavroutiedbfunction(widget.data, context);
+                  } else {
+                    favsongslistdelete(widget.data, context);
+                  }
+                });
               },
-              // icon: isChecking == true
-              //     ? Icon(Icons.favorite)
-              //     : Icon(Icons.favorite_outline_outlined)
-              icon: Icon(Icons.favorite),
-              )
+              icon: isChecking == true
+                  ? Icon(Icons.favorite)
+                  : Icon(Icons.favorite_outline_outlined))
         ],
       ),
       onTap: () {
         playsongs(widget.index, allSongListNotifier.value);
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => nowplayingscreen(data: widget.data),
-        //     ));
-       // MiniPlayer();
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NowPlayingScreen(data: widget.data),
+            ));
+        MiniPlayer();
       },
     );
   }
 }
-
-
-
 
 // The home page three container Fav,Recently,Most
 class ProductWidgets extends StatefulWidget {
@@ -99,13 +103,12 @@ class ProductWidgets extends StatefulWidget {
 
 class _ProductWidgetsState extends State<ProductWidgets> {
   List<Widget> containerNavigation = [
-    // favlistscreen(),
-    // recentlylistscreen(),
-    // mostplayedlistScreen()
+     favlistscreen(),
+    recentlylistscreen(),
+    mostplayedlistScreen()
   ];
 
   List<String> containername = ["Favourite", "Recently Played", "Most Played"];
-
 
   @override
   Widget build(BuildContext context) {
@@ -184,3 +187,151 @@ class _ProductWidgetsState extends State<ProductWidgets> {
     );
   }
 }
+
+//drawer
+class drawerlist extends StatefulWidget {
+  drawerlist({super.key});
+
+  @override
+  State<drawerlist> createState() => _drawerlistState();
+}
+
+class _drawerlistState extends State<drawerlist> {
+  String? savedName;
+  String? firstchar;
+  String? LastChar;
+  //sharedpreference
+  Future<void> username() async {
+    final SharedPreferences sharedPrefs1 =
+        await SharedPreferences.getInstance();
+    final SharedPreferences sharedPrefs2 =
+        await SharedPreferences.getInstance();
+    final SharedPreferences sharedPrefs3 =
+        await SharedPreferences.getInstance();
+    setState(() {
+      savedName = sharedPrefs1.getString('Save_Name');
+      print(savedName);
+      firstchar = sharedPrefs2.getString("FirstChar");
+      LastChar = sharedPrefs3.getString("LastChar");
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    username();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text(
+              (savedName != null) ? savedName.toString() : "Hello User",
+              style: TextStyle(fontSize: 20, color: Colors.white),
+            ),
+            accountEmail: TextScroll(
+                "Experience the power of music like never before with",
+                style: TextStyle(fontSize: 15, color: Colors.white)),
+            currentAccountPicture: CircleAvatar(
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              child: savedName != null
+                  ? Text(
+                      "$firstchar$LastChar",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
+                    )
+                  : Text("UR",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w500)),
+              //Text(,style: TextStyle(fontSize: 30),),
+            ),
+            decoration: BoxDecoration(
+                color: Colors.grey,
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/image2/drawerBackground.jpg",
+                    ),
+                    fit: BoxFit.cover)),
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text("About"),
+            onTap: () {
+              showAboutDialog(
+                  context: context,
+                  applicationName: "NARO MUSIC",
+                  applicationIcon: Image.asset(
+                    "assets/image2/narolistlogo.png",
+                    height: 32,
+                    width: 32,
+                  ),
+                  applicationVersion: "1.0.1",
+                  children: [
+                    const Text(
+                        "NARO MUSIC is an offline music player app which allows use to hear music from their local storage and also do functions like add to favorites , create playlists , recently played , mostly played etc."),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text("App developed by Amal N.")
+                  ]);
+              leading:
+              const Icon(
+                Icons.person,
+                size: 35,
+                color: Colors.white,
+              );
+              title:
+              const Text(
+                "About",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Inter",
+                    fontSize: 18),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.share),
+            title: Text("Share"),
+            onTap: () {},
+          ),
+          // ListTile(
+          //   leading: Icon(Icons.notifications),
+          //   title: Text("Notificaton"),
+          //   onTap: () {},
+          // ),
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text("Terms and Conditions"),
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return privacydialoge(
+                        mdFileName: "terms_and_conditions.md");
+                  });
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.privacy_tip),
+            title: Text("Privacy and Policy"),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return privacydialoge(mdFileName: "privacy_policy.md");
+                },
+              );
+            },
+          )
+        ],
+      ),
+    );
+  }
+} //**drwer */

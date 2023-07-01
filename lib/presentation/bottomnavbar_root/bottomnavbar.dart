@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
 import 'package:naromusic/presentation/home_screen/home_screen.dart';
+import 'package:naromusic/presentation/miniplayer_screen/miniplayer_screen.dart';
 import 'package:naromusic/presentation/playlist_screen/playlist_screen.dart';
 import 'package:naromusic/presentation/search_screen/search_screen.dart';
 
@@ -28,11 +30,11 @@ class _BottomNavbarState extends State<BottomNavbar> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // ValueListenableBuilder(
-          //     valueListenable: isSongPlayingNotifier,
-          //     builder: (BuildContext contx, isPlay, Widget? child) {
-          //       return isPlay ? MiniPlayer() : const SizedBox();
-          //     }),
+          ValueListenableBuilder(
+              valueListenable: isSongPlayingNotifier,
+              builder: (BuildContext contx, isPlay, Widget? child) {
+                return isPlay ? MiniPlayer() : const SizedBox();
+              }),
           Container(
             color: Colors.white,
             child: Padding(

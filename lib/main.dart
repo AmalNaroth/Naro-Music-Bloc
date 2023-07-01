@@ -26,11 +26,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        //brightness: Brightness.dark,
         primarySwatch: Colors.grey,
         textTheme: Theme.of(context).textTheme.apply(
          bodyColor: Color.fromARGB(255, 0, 0, 0),
-         displayColor: Color.fromARGB(255, 0, 0, 0)
-        )
+         displayColor: Color.fromARGB(255, 0, 0, 0),
+        ),
       ),
       home: const SplashScreen(),
     );

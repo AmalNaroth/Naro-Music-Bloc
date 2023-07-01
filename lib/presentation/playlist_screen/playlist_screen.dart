@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
 import 'package:naromusic/presentation/playlist_screen/playlist_widgets/playlist_widgets.dart';
@@ -15,7 +16,7 @@ class PlayListScreen extends StatefulWidget {
 class _PlayListScreenState extends State<PlayListScreen> {
   @override
   Widget build(BuildContext context) {
-   // addplaylistdbtovaluelistenable();
+    addplaylistdbtovaluelistenable();
     final obj = createnewplaylist(context);
     return Material(
         color: Colors.white,
@@ -76,20 +77,20 @@ class _PlayListScreenState extends State<PlayListScreen> {
                           itemCount: playlistname.length,
                           itemBuilder: (context, index) {
                             final data = playlistname[index];
-                            // if (index % 2 == 0) {
-                            //   return PlayListListing(
-                            //     index: index,
-                            //     data: data,
-                            //   );
-                            // }
+                            if (index % 2 == 0) {
+                              return PlayListListing(
+                                index: index,
+                                data: data,
+                              );
+                            }
                             return OverflowBox(
                               maxHeight: 250 + 70,
                               child: Container(
                                 margin: EdgeInsets.only(top: 70),
-                                // child: PlayListListing(
-                                //   index: index,
-                                //   data: data,
-                                // ),
+                                child: PlayListListing(
+                                  index: index,
+                                  data: data,
+                                ),
                               ),
                             );
                           },

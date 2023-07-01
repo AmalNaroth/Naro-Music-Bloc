@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/infrastructure/controller/controllers.dart';
 import 'package:naromusic/presentation/bottomnavbar_root/bottomnavbar.dart';
-import 'package:naromusic/presentation/home_screen/home_screen.dart';
 import 'package:naromusic/presentation/user_screen/user_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () {
       CheckPermission();
       addname();
-      allSongsValueList();
+      AllsongsdatashowList();
     });
     super.initState();
   }
