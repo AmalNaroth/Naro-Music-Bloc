@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:naromusic/application/playlist/playlist_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -63,8 +65,9 @@ class createnewplaylist {
   void _submitForm() {
     final textValue = _playlisttexcontroller.text;
     print('textcontroller = ${textValue}');
-    List<songsmodel> listarray = [];
-    addplaylisttodatabase(textValue, listarray, context);
+    //List<songsmodel> listarray = [];
+   // addplaylisttodatabase(textValue, listarray, context);
+   context.read<PlaylistBloc>().add(NewPlayList(newPlayListName: textValue));
     Navigator.pop(context);
   }
 }
@@ -142,7 +145,8 @@ class PlayListListing extends StatelessWidget {
                                       child: InkWell(
                                     onTap: () {
                                       Navigator.of(context).pop();
-                                      playlistdelete(data, context);
+                                     // playlistdelete(data);
+                                     context.read<PlaylistBloc>().add(DeletePlayList(deletedata: data));
                                     },
                                     child: Row(
                                       mainAxisAlignment:

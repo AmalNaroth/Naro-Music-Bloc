@@ -86,57 +86,52 @@ void callingBottomSheet(BuildContext context, songsmodel songdata) {
             height: 10,
           ),
           Expanded(
-            child: ValueListenableBuilder(
-                valueListenable: playlistnamenotifier,
-                builder: (BuildContext context,
-                    List<playlistmodel> playlistname, Widget? child) {
-                  return !playlistname.isEmpty
-                      ? ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: playlistname.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            final data = playlistname[index];
-                            return Container(
-                                height: 65,
-                                decoration: BoxDecoration(
-                                    color: Colors.grey.shade400,
-                                    borderRadius: BorderRadius.circular(12)),
-                                margin: EdgeInsets.only(
-                                    bottom: 5, right: 15, left: 15),
-                                child: Center(
-                                  child: ListTile(
-                                    leading: CircleAvatar(
-                                      backgroundImage: AssetImage(
-                                          'assets/image2/narolistlogo.png'),
-                                    ),
-                                    title: TextScroll(
-                                      data.playlistname,
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          overflow: TextOverflow.ellipsis,
-                                          fontWeight: FontWeight.w400),
-                                    ),
-                                    tileColor: Color.fromARGB(0, 136, 136, 136)
-                                        .withOpacity(0.3),
-                                    onTap: () {
-                                      Navigator.of(context).pop();
-                                      songaddtoplaylistdatabase(
-                                          data.playlistname, songdata, context);
-                                    },
-                                  ),
-                                ));
-                          },
-                        )
-                      : Center(
-                          child: Text(
-                            "No playlist",
-                            style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black54),
-                          ),
-                        );
-                }),
+            child: !allPlayListNameGlobal.isEmpty
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: allPlayListNameGlobal.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final data = allPlayListNameGlobal[index];
+                      return Container(
+                          height: 65,
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade400,
+                              borderRadius: BorderRadius.circular(12)),
+                          margin: EdgeInsets.only(
+                              bottom: 5, right: 15, left: 15),
+                          child: Center(
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundImage: AssetImage(
+                                    'assets/image2/narolistlogo.png'),
+                              ),
+                              title: TextScroll(
+                                data.playlistname,
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    overflow: TextOverflow.ellipsis,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                              tileColor: Color.fromARGB(0, 136, 136, 136)
+                                  .withOpacity(0.3),
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                songaddtoplaylistdatabase(
+                                    data.playlistname, songdata, context);
+                              },
+                            ),
+                          ));
+                    },
+                  )
+                : Center(
+                    child: Text(
+                      "No playlist",
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black54),
+                    ),
+                  ),
           ),
         ],
       ),

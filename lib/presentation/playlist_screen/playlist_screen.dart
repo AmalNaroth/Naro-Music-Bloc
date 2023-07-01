@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:naromusic/application/playlist/playlist_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
@@ -46,71 +48,49 @@ class _PlayListScreenState extends State<PlayListScreen> {
                       onTap: () {
                         obj.createnewolayList(context);
                       },
-                        child: Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Icon(CupertinoIcons.add),
-                        ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Icon(CupertinoIcons.add),
+                      ),
                     )
                   ],
                 ),
               ),
-              ValueListenableBuilder(
-                valueListenable: playlistnamenotifier,
-                builder: (BuildContext context,
-                    List<playlistmodel> playlistname, Widget? child) {
-                  return !playlistname.isEmpty
-                      ? GridView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(
-                              top: 20, right: 5, left: 5, bottom: 50),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  childAspectRatio:
-                                      (MediaQuery.of(context).size.width -
-                                              15 -
-                                              10) /
-                                          (2 * 250),
-                                  mainAxisSpacing: 30,
-                                  crossAxisSpacing: 5),
-                          itemCount: playlistname.length,
-                          itemBuilder: (context, index) {
-                            final data = playlistname[index];
-                            if (index % 2 == 0) {
-                              return PlayListListing(
-                                index: index,
-                                data: data,
-                              );
-                            }
-                            return OverflowBox(
-                              maxHeight: 250 + 70,
-                              child: Container(
-                                margin: EdgeInsets.only(top: 70),
-                                child: PlayListListing(
-                                  index: index,
-                                  data: data,
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                      : Column(
-                          children: [
-                            SizedBox(
-                              height: 300,
-                            ),
-                            Center(
-                              child: Text(
-                                "No playlist",
-                                style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
+              BlocBuilder<PlaylistBloc, PlaylistState>(
+                builder: (context, state) {
+                  return GridView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    padding:
+                        EdgeInsets.only(top: 20, right: 5, left: 5, bottom: 50),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio:
+                            (MediaQuery.of(context).size.width - 15 - 10) /
+                                (2 * 250),
+                        mainAxisSpacing: 30,
+                        crossAxisSpacing: 5),
+                    itemCount: allPlayListNameGlobal.length,
+                    itemBuilder: (context, index) {
+                      final data = state.newplayList[index];
+                      if (index % 2 == 0) {
+                        return PlayListListing(
+                          index: index,
+                          data: data,
                         );
+                      }
+                      return OverflowBox(
+                        maxHeight: 250 + 70,
+                        child: Container(
+                          margin: EdgeInsets.only(top: 70),
+                          child: PlayListListing(
+                            index: index,
+                            data: data,
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
               )
             ],

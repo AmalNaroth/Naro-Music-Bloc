@@ -11,3 +11,5 @@ class playlistmodel{
 
   playlistmodel({required this.playlistname,required this.playlistarray});
 }
+
+List<playlistmodel> allPlayListNameGlobal=[];

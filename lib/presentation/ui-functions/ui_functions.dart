@@ -1,6 +1,5 @@
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
-import 'package:naromusic/domain/db/notifierlist/songNotifierList.dart';
 
 void findsong(int id){
   for(var element in allSongsListGlobal){

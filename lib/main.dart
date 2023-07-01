@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:naromusic/application/bottomnav/bottomnav_bloc.dart';
 import 'package:naromusic/application/favourites/favourites_bloc.dart';
+import 'package:naromusic/application/playlist/playlist_bloc.dart';
 import 'package:naromusic/application/songsearch/songsearch_bloc.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -40,6 +41,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => FavouritesBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PlaylistBloc(),
         )
       ],
       child: MaterialApp(

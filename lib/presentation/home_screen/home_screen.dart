@@ -70,49 +70,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SizedBox(
                           height: 65,
-                          child: ValueListenableBuilder(
-                            valueListenable: playlistnamenotifier,
-                            builder: (BuildContext context,
-                                List<playlistmodel> playlistname,
-                                Widget? child) {
-                              return !playlistname.isEmpty
-                                  ? ListView.builder(
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: playlistname.length,
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        final data = playlistname[index];
-                                        return InkWell(
-                                          onTap: () {
-                                            Navigator.of(context)
-                                                .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  PlayListSongListing(
-                                                      data: data),
-                                            ));
-                                          },
-                                          child: Center(
-                                              child: Text(
-                                            data.playlistname,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    "FiraSansCondensed-Medium",
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500),
-                                          )),
-                                        );
+                          child:ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: allPlayListNameGlobal.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    final data = allPlayListNameGlobal[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              PlayListSongListing(
+                                                  data: data),
+                                        ));
                                       },
-                                    )
-                                  : Center(
-                                      child: Text("No play list",
-                                          style: GoogleFonts.beVietnamPro(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 18,
-                                              color: Colors.grey.shade700)),
+                                      child: Center(
+                                          child: Text(
+                                        data.playlistname,
+                                        style: TextStyle(
+                                            fontFamily:
+                                                "FiraSansCondensed-Medium",
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500),
+                                      )),
                                     );
-                            },
-                          )),
+                                  },
+                                )
+                              ),
                       SizedBox(
                         height: 10,
                       ),
