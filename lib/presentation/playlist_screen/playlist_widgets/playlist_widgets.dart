@@ -71,11 +71,6 @@ class createnewplaylist {
 
 
 
-
-
-
-
-
 //playlist container showing
 class PlayListListing extends StatelessWidget {
   PlayListListing({super.key, required this.index, required this.data});

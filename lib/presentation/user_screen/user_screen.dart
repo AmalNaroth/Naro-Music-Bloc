@@ -103,7 +103,7 @@ class UserScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 12,
+                  height: 40,
                 ),
                 GestureDetector(
                   onTap: () {

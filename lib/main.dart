@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:naromusic/application/bottomnav/bottomnav_bloc.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/presentation/splash_screen/splash_screen.dart';
@@ -23,17 +25,22 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        //brightness: Brightness.dark,
-        primarySwatch: Colors.grey,
-        textTheme: Theme.of(context).textTheme.apply(
-         bodyColor: Color.fromARGB(255, 0, 0, 0),
-         displayColor: Color.fromARGB(255, 0, 0, 0),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => BottomnavBloc(),)
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          //brightness: Brightness.dark,
+          primarySwatch: Colors.grey,
+          textTheme: Theme.of(context).textTheme.apply(
+           bodyColor: Color.fromARGB(255, 0, 0, 0),
+           displayColor: Color.fromARGB(255, 0, 0, 0),
+          ),
         ),
+        home: const SplashScreen(),
       ),
-      home: const SplashScreen(),
     );
   }
 }
