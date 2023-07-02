@@ -1,9 +1,11 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/presentation/home_screen/home_screen.dart';
 import 'package:naromusic/presentation/nowplaying_screen/nowplaying_widgets.dart';
+import 'package:naromusic/presentation/ui-functions/ui_functions.dart';
 import 'package:naromusic/presentation/widgets/common_widgets.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:text_scroll/text_scroll.dart';
@@ -27,9 +29,9 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
     return Scaffold(body: audioPlayer.builderCurrent(
       builder: (context, playing) {
         int songid = int.parse(playing.audio.audio.metas.id!);
-        //findsong(songid);
-        //songsmodel songdata = findsongwithid(songid);
-        // bool ischeck= favouritecheckings(songdata);
+        findsong(songid);
+        songsmodel songdata = findsongwithid(songid);
+        bool ischeck= favouritecheckings(songdata);
         return SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: SafeArea(
@@ -135,16 +137,16 @@ class _NowPlayingScreenState extends State<NowPlayingScreen> {
                             IconButton(
                                 onPressed: () {
                                   setState(() {
-                                    // if(ischeck==false){
-                                    //   addtofavroutiedbfunction(widget.data,context);
-                                    // }else{
-                                    //   favsongslistdelete(widget.data,context);
-                                    // }
+                                    if(ischeck==false){
+                                      addtofavroutiedbfunction(widget.data,);
+                                    }else{
+                                      favsongslistdelete(widget.data);
+                                    }
                                   });
                                 },
                                 icon:
-                                    // ischeck==true?
-                                    //Icon(Icons.favorite,size: 32,):
+                                     ischeck==true?
+                                    Icon(Icons.favorite,size: 32,):
                                     Icon(
                                   Icons.favorite_outline_outlined,
                                   size: 32,

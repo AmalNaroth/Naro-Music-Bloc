@@ -251,9 +251,9 @@ playlistdelete(playlistmodel data) async {
   addplaylistdbtovaluelistenable();
 }
 
+//songsadding to playlist
 
-
-songaddtoplaylistdatabase(String listname, songsmodel songdata, context) async {
+songaddtoplaylistdatabase(String listname, songsmodel songdata) async {
   final playlistDB = await Hive.openBox<playlistmodel>('playlistDB');
   int index = 0;
   List<songsmodel> newplayarray = [];
@@ -264,10 +264,10 @@ songaddtoplaylistdatabase(String listname, songsmodel songdata, context) async {
       for (var element in newplayarray) {
         if (songdata.id == element.id) {
           flag = false;
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text('The song is already exists'),
-              behavior: SnackBarBehavior.floating,
-              duration: Duration(seconds: 1)));
+          // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          //     content: Text('The song is already exists'),
+          //     behavior: SnackBarBehavior.floating,
+          //     duration: Duration(seconds: 1)));
           return;
         }
       }
@@ -277,18 +277,20 @@ songaddtoplaylistdatabase(String listname, songsmodel songdata, context) async {
             playlistmodel(playlistname: listname, playlistarray: newplayarray);
         playlistDB.putAt(index, newplaylist);
        // playlistnamenotifier.notifyListeners();
-        playlistsongnotifier.notifyListeners();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Song added to playlist'),
-          behavior: SnackBarBehavior.floating,
-          duration: Duration(seconds: 1),
-        ));
+        //playlistsongnotifier.notifyListeners();
+        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        //   content: Text('Song added to playlist'),
+        //   behavior: SnackBarBehavior.floating,
+        //   duration: Duration(seconds: 1),
+        // ));
       }
     }
     index++;
   }
 }
 
+
+//song deleting to playlist
 songsdeletefromplaylist(songsmodel data, String name) async {
   final playlistDB = await Hive.openBox<playlistmodel>('playlistDB');
   int index = 0;
@@ -302,8 +304,8 @@ songsdeletefromplaylist(songsmodel data, String name) async {
           final newplaylist =
               playlistmodel(playlistname: name, playlistarray: newlist);
           playlistDB.putAt(index, newplaylist);
-          playlistsongnotifier.notifyListeners();
-          playlistsongnotifier.notifyListeners();
+          //playlistsongnotifier.notifyListeners();
+         // playlistsongnotifier.notifyListeners();
           break;
         }
       }

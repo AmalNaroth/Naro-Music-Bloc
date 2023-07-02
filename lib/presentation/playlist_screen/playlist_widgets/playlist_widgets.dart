@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:naromusic/application/playlist/playlist_bloc.dart';
+import 'package:naromusic/application/playlistsongs/playlistsongs_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -252,8 +253,9 @@ void callingBottomSheetsonglisting(BuildContext context, String listname) {
                             Color.fromARGB(0, 136, 136, 136).withOpacity(0.3),
                         trailing: IconButton(
                             onPressed: () {
-                              songaddtoplaylistdatabase(
-                                  listname, data, context);
+                              // songaddtoplaylistdatabase(
+                              //     listname, data);
+                              context.read<PlaylistsongsBloc>().add(PlayListAddingEvent(PlayListName: listname, NewSongData: data));
                             },
                             icon: Icon(Icons.add,color: Colors.black,))));
               },

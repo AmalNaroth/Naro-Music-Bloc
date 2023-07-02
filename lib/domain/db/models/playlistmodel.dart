@@ -13,3 +13,5 @@ class playlistmodel{
 }
 
 List<playlistmodel> allPlayListNameGlobal=[];
+
+List<songsmodel> PlayListSongsListGlobal=[];

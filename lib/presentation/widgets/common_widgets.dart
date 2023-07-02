@@ -1,5 +1,7 @@
 //common white shade design
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:naromusic/application/playlistsongs/playlistsongs_bloc.dart';
 import 'package:naromusic/domain/db/functions/db_functions.dart';
 import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
@@ -116,8 +118,9 @@ void callingBottomSheet(BuildContext context, songsmodel songdata) {
                                   .withOpacity(0.3),
                               onTap: () {
                                 Navigator.of(context).pop();
-                                songaddtoplaylistdatabase(
-                                    data.playlistname, songdata, context);
+                                // songaddtoplaylistdatabase(
+                                //     data.playlistname, songdata);
+                                context.read<PlaylistsongsBloc>().add(PlayListAddingEvent(PlayListName: data.playlistname, NewSongData: songdata));
                               },
                             ),
                           ));

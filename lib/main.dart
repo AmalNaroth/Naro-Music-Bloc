@@ -10,6 +10,8 @@ import 'package:naromusic/domain/db/models/playlistmodel.dart';
 import 'package:naromusic/domain/db/models/songsmodel.dart';
 import 'package:naromusic/presentation/splash_screen/splash_screen.dart';
 
+import 'application/playlistsongs/playlistsongs_bloc.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.initFlutter();
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => PlaylistBloc(),
+        ),
+        BlocProvider(
+          create: (context) => PlaylistsongsBloc(),
         )
       ],
       child: MaterialApp(
